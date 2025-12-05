@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day3 {
@@ -19,7 +20,7 @@ public class Day3 {
     public static int findMaximumJoltage(List<Integer> digits) {
         int lastValue = digits.getLast();
         int highestV = Collections.max(digits);
-        if(lastValue == highestV) {
+        if (lastValue == highestV) {
             digits.remove(digits.indexOf(lastValue));
             int highestValue = Collections.max(digits);
             return Integer.parseInt(highestValue + "" + lastValue);
@@ -33,29 +34,22 @@ public class Day3 {
     }
 
     void main() {
-        List<String> joltageRatings = new ArrayList<>();
+        int sum = 0;
 
         try (Stream<String> lines = Files.lines(inputPath)) {
-            lines
-                    .forEach(joltageRatings::add);
-        } catch (IOException e) {
-            logger.error("Error reading file", e);
-        } catch (NumberFormatException e) {
-            logger.error("Invalid number in file", e);
-        }
-        List<Integer> totalResult = new ArrayList<>();
-        joltageRatings.forEach(joltageRating -> {
-            List<Integer> digits = new ArrayList<>();
-            for (char c : joltageRating.toCharArray()) {
-                digits.add(Character.getNumericValue(c));
-            }
-            totalResult.add(findMaximumJoltage(digits));
+            sum = lines
+                    .map(line -> line.chars()
+                            .map(Character::getNumericValue)
+                            .boxed()
+                            .collect(Collectors.toList()))
+                    .mapToInt(Day3::findMaximumJoltage)
+                    .sum();
 
-        });
-        int sum = totalResult.stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+        } catch (IOException | NumberFormatException e) {
+            logger.error("Error reading file", e);
+        }
         logger.info(String.valueOf(sum));
     }
+
     // Result was 17034
 }
