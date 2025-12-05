@@ -13,6 +13,41 @@ public class Day2 {
     static Logger logger = LoggerFactory.getLogger(Day2.class);
     static Path inputPath = Paths.get("src/main/resources/Day2/PuzzleInput.txt");
 
+
+    static long isNumberEvenLength(long number) {
+        String strNum = String.valueOf(number);
+        if (strNum.length() % 2 == 0) {
+            int mid = strNum.length() / 2;
+            String firstHalf = strNum.substring(0, mid);
+            String secondHalf = strNum.substring(mid);
+
+            if (firstHalf.equals(secondHalf)) {
+                logger.info(number + " is made by repeating " + firstHalf + " twice.");
+                return Long.parseLong(strNum);
+            }
+        }
+        return 0;
+    }
+
+    public static boolean isRepeatedPattern(long num) {
+        String strNum = String.valueOf(num);
+
+        for (int patternLen = 1; patternLen <= strNum.length() / 2; patternLen++) {
+            if (strNum.length() % patternLen == 0) { // Only exact repeats
+                String pattern = strNum.substring(0, patternLen);
+                StringBuilder repeated = new StringBuilder();
+                int repeatCount = strNum.length() / patternLen;
+                for (int i = 0; i < repeatCount; i++) {
+                    repeated.append(pattern);
+                }
+                if (repeated.toString().equals(strNum)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     static void main(String[] args) {
 
         // Split the input and insert them into the list.
@@ -43,20 +78,18 @@ public class Day2 {
 
 
         List<Long> results = new ArrayList<>();
+        List<Long> resultsPart2 = new ArrayList<>();
         for (long[] range : idRanges) {
             long start = range[0];
             long end = range[1];
             for (long num = Long.parseLong(String.valueOf(start)); num <= Long.parseLong(String.valueOf(end)); num++) {
-                String strNum = String.valueOf(num);
-                if (strNum.length() % 2 == 0) {
-                    int mid = strNum.length() / 2;
-                    String firstHalf = strNum.substring(0, mid);
-                    String secondHalf = strNum.substring(mid);
+                long result = isNumberEvenLength(num);
+                if (result != 0) {
+                    results.add(result);
+                }
 
-                    if (firstHalf.equals(secondHalf)) {
-                        results.add(num);
-                        logger.info(num + " is made by repeating " + firstHalf + " twice.");
-                    }
+                if(isRepeatedPattern(num)) {
+                    resultsPart2.add(num);
                 }
             }
         }
@@ -66,7 +99,12 @@ public class Day2 {
                 .mapToLong(Long::longValue)
                 .sum();
 
+        Long sumPart2 = resultsPart2.stream()
+                .mapToLong(Long::longValue)
+                .sum();
+
         logger.info(String.valueOf(sum));
+        logger.info(String.valueOf(sumPart2));
     }
 
     // Result is 22062284697
