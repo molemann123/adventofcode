@@ -17,7 +17,7 @@ public class Day3 {
     static Logger logger = LoggerFactory.getLogger(Day3.class);
     static Path inputPath = Paths.get("src/main/resources/Day3/PuzzleInput.txt");
 
-    public static int findMaximumJoltage(List<Integer> digits) {
+    static int findMaximumJoltage(List<Integer> digits) {
         int lastValue = digits.getLast();
         int highestV = Collections.max(digits);
         if (lastValue == highestV) {
