@@ -14,10 +14,10 @@ public class Day2 {
     static Path inputPath = Paths.get("src/main/resources/Day2/PuzzleInput.txt");
 
     static void main(String[] args) {
-        Map<String, String> idRanges = new HashMap<>();
 
+        // Split the input and insert them into the list.
+        List<long[]> idRanges = new ArrayList<>();
 
-        // Split the input and insert them into map. Order doesn't matter in this case.
         try (Stream<String> lines = Files.lines(inputPath)) {
             lines.forEach(line -> {
                 String[] parts = line.split(",");
@@ -26,7 +26,13 @@ public class Day2 {
                     if (!part.isEmpty()) {
                         String[] range = part.split("-");
                         if (range.length == 2) {
-                            idRanges.put(range[0], range[1]);
+                            try {
+                                long start = Long.parseLong(range[0].trim());
+                                long end = Long.parseLong(range[1].trim());
+                                idRanges.add(new long[]{start, end});
+                            } catch (NumberFormatException e) {
+                                logger.warn("Skipping invalid range: " + part, e);
+                            }
                         }
                     }
                 }
@@ -35,10 +41,12 @@ public class Day2 {
             logger.error("Error reading file", e);
         }
 
+
         List<Long> results = new ArrayList<>();
-        idRanges.forEach((start, end) -> {
-            logger.info("Going from {} to {}", start, end);
-            for (long num = Long.parseLong(start); num <= Long.parseLong(end); num++) {
+        for (long[] range : idRanges) {
+            long start = range[0];
+            long end = range[1];
+            for (long num = Long.parseLong(String.valueOf(start)); num <= Long.parseLong(String.valueOf(end)); num++) {
                 String strNum = String.valueOf(num);
                 if (strNum.length() % 2 == 0) {
                     int mid = strNum.length() / 2;
@@ -47,15 +55,18 @@ public class Day2 {
 
                     if (firstHalf.equals(secondHalf)) {
                         results.add(num);
+                        logger.info(num + " is made by repeating " + firstHalf + " twice.");
                     }
                 }
             }
-        });
+        }
+
+
         Long sum = results.stream()
                 .mapToLong(Long::longValue)
                 .sum();
-        logger.info(String.valueOf(sum));
 
+        logger.info(String.valueOf(sum));
     }
 
     // Result is 22062284697
