@@ -1,8 +1,6 @@
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,6 +61,27 @@ public class Day5 {
         }
 
         logger.info("Fresh ingredients total {}", freshIngredients.size());
+
+        // Part 2
+        idRanges.sort(Comparator.comparingLong(a -> a[0]));
+
+        long count = 0;
+        long currentEnd = Long.MIN_VALUE;
+
+        for (long[] range : idRanges) {
+            long start = range[0];
+            long end = range[1];
+
+            if (start > currentEnd) {
+                count += (end - start + 1);
+                currentEnd = end;
+            } else if (end > currentEnd) {
+                count += (end - currentEnd);
+                currentEnd = end;
+            }
+        }
+        logger.info(String.valueOf(count));
     }
 }
 // Result 733
+// Result 345821388687084
