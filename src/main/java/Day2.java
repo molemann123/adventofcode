@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-// https://adventofcode.com/2019/day/1
+// https://adventofcode.com/2025/day/2
 public class Day2 {
     static Logger logger = LoggerFactory.getLogger(Day2.class);
     static Path inputPath = Paths.get("src/main/resources/Day2/PuzzleInput.txt");

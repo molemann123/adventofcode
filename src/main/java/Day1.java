@@ -49,4 +49,5 @@ public class Day1 {
         });
         logger.info("Value of dial is {} and value of password is {}", dial, password);
     }
+    // Result is 1141
 }

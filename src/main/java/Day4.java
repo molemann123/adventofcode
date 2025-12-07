@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Day4 {
 
-    // https://adventofcode.com/2025/day/3
+    // https://adventofcode.com/2025/day/4
     static Logger logger = LoggerFactory.getLogger(Day4.class);
     static Path inputPath = Paths.get("src/main/resources/Day4/PuzzleInput.txt");
     static char[][] grid;

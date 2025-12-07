@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class Day5 {
 
-    // https://adventofcode.com/2025/day/3
+    // https://adventofcode.com/2025/day/5
     static Logger logger = LoggerFactory.getLogger(Day5.class);
     static Path inputPath = Paths.get("src/main/resources/Day5/PuzzleInput.txt");
 

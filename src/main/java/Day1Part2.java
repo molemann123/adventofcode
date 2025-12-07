@@ -68,4 +68,6 @@ public class Day1Part2 {
 
         logger.info("Value of dial is %d and password is {} {}", dial, password);
     }
+
+    // Result is 6634
 }
