@@ -47,8 +47,9 @@ public class Day6 {
 
     String buildEquation(List<String> columns) {
         StringBuilder builder = new StringBuilder();
+
         columns.forEach(equation -> {
-            if(columns.getLast().equals("*")) {
+            if (columns.getLast().equals("*")) {
                 if (!Objects.equals(equation, "*")) {
                     builder.append(equation).append("*");
                 }
@@ -59,6 +60,7 @@ public class Day6 {
             }
 
         });
+
         return builder.toString();
     }
 
@@ -73,12 +75,13 @@ public class Day6 {
         String[] numbers = equation.split("[*+]");
         long result = multiply ? 1 : 0;
         for (String num : numbers) {
-            if(multiply) {
+            if (multiply) {
                 result *= Integer.parseInt(num);
             } else {
                 result += Integer.parseInt(num);
             }
         }
+
         logger.info("Result: " + result);
         return result;
     }
@@ -88,15 +91,12 @@ public class Day6 {
         List<Long> results = new ArrayList<>();
 
         columns.forEach(column -> {
-                String equation = buildEquation(column);
-                results.add(getEquationResult(equation));
+            column.forEach(equation -> {
+               logger.info("Equation: " + equation);
+            });
+
         });
 
-        Long sum = results.stream()
-                .mapToLong(Long::longValue)
-                .sum();
-
-        logger.info(String.valueOf(sum));
     }
     // Result is 4412382293768
 }
