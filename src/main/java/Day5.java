@@ -28,7 +28,6 @@ public class Day5 {
                     if (!part.isEmpty()) {
                         String[] range = part.split("-");
 
-                        // A range like "3-5"
                         if (range.length == 2) {
                             try {
                                 long start = Long.parseLong(range[0].trim());
@@ -37,9 +36,7 @@ public class Day5 {
                             } catch (NumberFormatException e) {
                                 logger.warn("Skipping invalid range: " + part, e);
                             }
-                        }
-                        // A single number like "8"
-                        else if (range.length == 1) {
+                        } else if (range.length == 1) {
                             try {
                                 long value = Long.parseLong(range[0].trim());
                                 availableIngredients.add(value);
