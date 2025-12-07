@@ -91,12 +91,15 @@ public class Day6 {
         List<Long> results = new ArrayList<>();
 
         columns.forEach(column -> {
-            column.forEach(equation -> {
-               logger.info("Equation: " + equation);
-            });
-
+            String equation = buildEquation(column);
+            results.add(getEquationResult(equation));
         });
 
+        Long sum = results.stream()
+                .mapToLong(Long::longValue)
+                .sum();
+
+        logger.info(String.valueOf(sum));
     }
     // Result is 4412382293768
 }
